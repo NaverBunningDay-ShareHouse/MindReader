@@ -1,8 +1,8 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: "\U0001F64F 제목"
-labels: enhancement
+title: "\U0001F195 "
+labels: 새기능
 assignees: ''
 
 ---
@@ -16,3 +16,4 @@ assignees: ''
 
 
 ## 참고자료
+:new:
