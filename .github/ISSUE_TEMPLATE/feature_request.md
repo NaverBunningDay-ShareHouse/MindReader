@@ -16,4 +16,3 @@ assignees: ''
 
 
 ## 참고자료
-:new:
