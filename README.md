@@ -8,6 +8,14 @@
 git clone https://github.com/NaverBunningDay-ShareHouse/MindReader.git
 ```
 
+## Watch
+
+```bash
+# 명령어 실행 후 코드 수정시, dist 폴더에 컨텐츠, 백그라운드 스크립트 자동 번들링됨
+# 바로 dist 폴더를 확장앱으로 실행시키면 작업하기 편하다
+npm run watch
+```
+
 ## Build
 
 ```

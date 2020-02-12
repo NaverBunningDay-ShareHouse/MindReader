@@ -10,7 +10,8 @@
     "build:prod": "./node_modules/.bin/webpack -p --optimize-minimize",
     "lint": "./node_modules/.bin/eslint",
     "build:bundle": "node bundle.js",
-    "build:deploy": "npm run cleanup && npm run copy && npm run build:prod && npm run build:bundle"
+    "build:deploy": "npm run cleanup && npm run copy && npm run build:prod && npm run build:bundle",
+    "watch": "./node_modules/.bin/webpack --hide-modules --colors --mode=none --watch --config webpack.watch.config.js"
   },
   "repository": {
     "type": "git",
