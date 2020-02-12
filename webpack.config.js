@@ -1,62 +1,64 @@
 const path = require(`path`)
-const fs = require(`fs`)
+// const BundleAnalyzerPlugin = require(`webpack-bundle-analyzer`).BundleAnalyzerPlugin
 
-const srcPath = path.resolve(__dirname, `./src/js/`)
-const distPath = path.resolve(__dirname, `./dist/js/`)
-
-function getEntries(dir, results) {
-	return new Promise((resolve, reject) => {
-		fs.readdir(dir, (err, list) => {
-			if (err) {
-				reject(err)
-			}
-			let i = 0;
-			(function next() {
-				let file = list[i++]
-				if (!file) {
-					return resolve(results
-						.filter(item => item.match && item.match(/.*\.js$/))
-						.map(item => ({
-							name: item.substring(srcPath.length + 1, item.length - 3),
-							path: item,
-						})).reduce((memo, item) => {
-							memo[item.name] = item.path
-							return memo
-						}, {}),
-
-					)
-				}
-				file = `${dir}/${file}`
-				fs.stat(file, (err, stat) => {
-					if (stat && stat.isDirectory()) {
-						getEntries(file, results).then(res => {
-							results = results.concat(res)
-							next()
-						})
-					} else {
-						results.push(file)
-						next()
-					}
-				})
-			}())
-		})
-	})
-}
-
-module.exports = async function(mode = `production`) {
-	const jsFiles = await getEntries(srcPath, [])
-	return {
-		mode: mode,
-		resolve: {
-			alias: {
-				"@": srcPath,
+module.exports = {
+	entry: {
+		"content": [`./src/js/content.js`],
+		"background": [`./src/js/background.js`],
+	},
+	output: {
+		path: path.resolve(__dirname, `./dist`),
+		filename: `[name].js`,
+	},
+	plugins: [
+		// new BundleAnalyzerPlugin(),
+	],
+	module: {
+		rules: [
+			{
+				test: /\.m?js$/,
+				exclude: /(node_modules|bower_components)\/(?!(lit-html))/,
+				use: {
+					loader: `babel-loader`,
+					options: {
+						presets: [`@babel/preset-env`],
+					},
+				},
 			},
-		},
-		plugins: [],
-		entry: jsFiles,
-		output: {
-			path: distPath,
-			filename: `[name].js`,
-		},
-	}
+			{
+				test: /\.js$/,
+				exclude: /node_modules/,
+				use: [`eslint-loader`],
+			},
+			{
+				test: /\.(css|scss)$/,
+				exclude: /node_modules/,
+				use: [
+					/* `style-loader`, */ 
+					`css-loader`, 
+					`sass-loader?outputStyle=expanded`,
+					`postcss-loader`,
+				],
+			},
+			{
+				test: /\.(png|svg|jpe?g|gif)$/,
+				exclude: /node_modules/,
+				loader: `file-loader`,
+				options: {
+					publicPath: `/src/`,
+					name: `[name].[ext]?[hash]`,
+				},
+			},
+			{
+				test: /\.(png|svg|jpe?g|gif)$/,
+				exclude: /node_modules/,
+				loader: `url-loader`,
+				options: {
+					publicPath: `/src/`,
+					name: `[name].[ext]?[hash]`,
+					limit: 10000,
+				},
+			},
+		],
+	},		
 }

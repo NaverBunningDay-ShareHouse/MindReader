@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "__MSG_APP_NAME__",
     "description": "__MSG_APP_DESCRIPTION__",
-    "version": "0.1.4",
+    "version": "0.1.8",
     "default_locale": "ko",
     "icons": {
         "48": "img/icon48.png",
@@ -24,10 +24,10 @@
                 "https://*/*"
             ],
             "js": [
-                "js/content-script.js"
+                "content.js"
             ],
             "css": [
-                "css/content-style.css"
+                "css/content.css"
             ],
             "run_at": "document_start",
             "all_frames": false
@@ -35,7 +35,7 @@
     ],
     "background": {
         "scripts": [
-            "js/background.js"
+            "background.js"
         ]
     },
     "permissions": [
@@ -54,7 +54,7 @@
         }
     },
     "web_accessible_resources": [
-        "css/content-style.css",
+        "css/content.css",
         "fonts/Jua-Regular.ttf"
     ]
 }
