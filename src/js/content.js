@@ -1,3 +1,5 @@
-import './content-scripts/module1.js'
+import './components/test-element.js'
 
-console.info(`content-script`)
+// TEST
+document.body.appendChild(document.createElement(`test-element`))
+console.info(`content-script start!`)
