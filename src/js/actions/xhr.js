@@ -1,5 +1,3 @@
-import { ObjectFlags } from "typescript"
-
 export const loadXhr = obj => new Promise((resolve, reject) => {
 	const req = new XMLHttpRequest()
 
@@ -22,5 +20,5 @@ export const loadXhr = obj => new Promise((resolve, reject) => {
 			}
 		}
 	}
-	req.send(JSON.stringify(obj.body)||obj.params|| null)
+	req.send(obj.body|| obj.params|| null)
 })
