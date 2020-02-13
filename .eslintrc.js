@@ -110,7 +110,7 @@ module.exports = {
         // 정적 메소드 아니면, this 사용, 정적 메소드면 static 사용
         // "class-methods-use-this": 1,
         // 조건문은 4개 미만까지 사용 가능
-        "complexity": [2, 4],
+        "complexity": [0, 4],
         "consistent-return": 1,
         // 일관된 조건 블록 형성
         "curly": 1,
@@ -178,7 +178,7 @@ module.exports = {
         "no-octal": 1,
         // no-octal-escape 잘모르겠음
         // 파라미터 재할당 금지
-        "no-param-reassign": 1,
+        "no-param-reassign": 0,
         // getPrototypeOf 를 이용해 구하기
         // "getPrototypeOf": 1,
         // 변수 재선언 금지
@@ -249,7 +249,7 @@ module.exports = {
         "quotes": [1, "backtick"],
         "semi": [1, "never"],
         // "max-params": [1, 2],
-        "max-lines-per-function": [1, {"max": 40,  "skipBlankLines": true, "skipComments": true}],
+        "max-lines-per-function": [1, {"max": 80,  "skipBlankLines": true, "skipComments": true}],
 
         // ECMAScript 6
         "arrow-body-style": 1,
