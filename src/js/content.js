@@ -1,21 +1,22 @@
 // import './components/test-element.js'
+import './components/music-box.js'
 import './components/css-api.js'
 import './components/ocr-api.js'
-import { loadXhr } from './actions/xhr.js'
+// import { loadXhr } from './actions/xhr.js'
 
 // TEST
-// document.body.appendChild(document.createElement(`test-element`))
+document.body.appendChild(document.createElement(`music-box`))
 
-async function xhrTest() {
-	const testXhrData = await loadXhr({
-		method: `GET`,
-		url: `https://www.naver.com`,
-	})
+// async function xhrTest() {
+// 	const testXhrData = await loadXhr({
+// 		method: `GET`,
+// 		url: `https://www.naver.com`,
+// 	})
   
-	console.info(testXhrData)
-}
+// 	console.info(testXhrData)
+// }
 
 // 가빈형 이거 쓰세염
-xhrTest()
+// xhrTest()
 
 console.info(`content-script start!`)
