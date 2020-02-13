@@ -1,2 +1,2 @@
 /* JavaScript for index.html */
-console.log('index.js');
+console.info(`index.js`)
