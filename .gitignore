@@ -60,3 +60,6 @@ typings/
 # build
 dist/
 zip/
+
+# secret
+config.js

@@ -7,16 +7,4 @@ import './components/ocr-api.js'
 // TEST
 document.body.appendChild(document.createElement(`music-box`))
 
-// async function xhrTest() {
-// 	const testXhrData = await loadXhr({
-// 		method: `GET`,
-// 		url: `https://www.naver.com`,
-// 	})
-  
-// 	console.info(testXhrData)
-// }
-
-// 가빈형 이거 쓰세염
-// xhrTest()
-
 console.info(`content-script start!`)
