@@ -4,6 +4,7 @@ node_modules/
 redux-zero.js
 server/
 
+webcomponent.js
 font-awesome.js
 webcomponents-sd-ce.js
 polyfill.min.js
