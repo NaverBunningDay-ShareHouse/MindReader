@@ -1,6 +1,8 @@
 # MindReader
 
-누가 앱 설명 좀 잘 해줘봐. 부탁한다! ![터치2](https://user-images.githubusercontent.com/26294469/74330154-82bc3780-4dd4-11ea-88f4-dc5f3676f93e.gif)
+![logo](https://github.com/NaverBunningDay-ShareHouse/MindReader/blob/master/src/img/icon128.png)
+
+저시력자를 위한 웹페이지 스크린 리더 확장 웹 어플리케이션
 
 ## Git Clone
 
