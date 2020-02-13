@@ -249,7 +249,7 @@ module.exports = {
         "quotes": [1, "backtick"],
         "semi": [1, "never"],
         // "max-params": [1, 2],
-        "max-lines-per-function": [1, {"max": 40,  "skipBlankLines": true, "skipComments": true}],
+        "max-lines-per-function": [1, {"max": 80,  "skipBlankLines": true, "skipComments": true}],
 
         // ECMAScript 6
         "arrow-body-style": 1,
