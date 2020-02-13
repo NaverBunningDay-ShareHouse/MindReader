@@ -34,7 +34,7 @@ class MusicBox extends LitElement {
 		return html`        		
 		<div class="${style}">
 			<div id="musicBox" @mouseup=${this.onClickMusicBox}>
-				<i class="fas fa-microphone-alt fa-5x"></i>
+				${this.isOff ? html`<i class="fas fa-microphone-alt fa-5x"></i>` : html`<i class="fas fa-microphone-alt-slash fa-5x"></i>`}
 			</div>
 		</div>  
 		`
@@ -68,7 +68,7 @@ class MusicBox extends LitElement {
 			}			
 		})
 
-		// onChanged 이벤트 짜기
+		// 스토리지 탭간 데이터 동기화
 		chrome.storage.onChanged.addListener(obj => {
 			if (obj.isOff.newValue) {
 				root.isOff = true
