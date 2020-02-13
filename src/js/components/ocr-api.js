@@ -1,8 +1,9 @@
 import { loadXhr } from '../actions/xhr.js'
 import { config } from '../../../config.js'
+import {ocrtoArray} from '../../js/components/ocr-array.js'
 
 console.info(`ocr-api start!`)
-async function xhrTest(imgURL, imgType) {
+export async function xhrTest(imgURL, imgType) {
 	const testXhrData = await loadXhr({
 		method: `POST`,
 		url: config.ocrApiURL,
@@ -18,7 +19,8 @@ async function xhrTest(imgURL, imgType) {
 		],
 		body: 
             {
-                "images": [
+                "images": 
+                [
                     {
                         "format": imgType/*받은 이미지파일 형식 설정*/,
                         "name": `imageTest`,
@@ -31,9 +33,10 @@ async function xhrTest(imgURL, imgType) {
                 "resultType": `string`,
                 "timestamp": 0,
                 "version": `V1`,
-                },
+            },
 	})
-	console.info(testXhrData)
+    console.info(`ocr-api.js`, testXhrData)
+    return testXhrData
 }//end xhrTest
 
-console.info(xhrTest(`https://lineofficial.blogimg.jp/en/imgs/6/d/6dd556f6.png`,`png`).images)
+xhrTest(`https://lineofficial.blogimg.jp/en/imgs/6/d/6dd556f6.png`,`png`)
