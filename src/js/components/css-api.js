@@ -1,6 +1,6 @@
 import { loadXhr } from '../actions/xhr.js'
 import { config } from '../../../config.js'
-import {Howl, Howler} from 'howler'
+
 // mijin : 한국어, 여성 음색
 // jinho : 한국어, 남성 음색
 // clara : 영어, 여성 음색
