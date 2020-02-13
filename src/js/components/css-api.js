@@ -1,5 +1,6 @@
 import { loadXhr } from '../actions/xhr.js'
 import { config } from '../../../config.js'
+import {Howl, Howler} from 'howler'
 // mijin : 한국어, 여성 음색
 // jinho : 한국어, 남성 음색
 // clara : 영어, 여성 음색
@@ -10,8 +11,7 @@ import { config } from '../../../config.js'
 // jose : 스페인어, 남성 음색
 // carmen : 스페인어, 여성 음색
 console.info(`css-api start!`)
-// 가빈이형 작업 공간
-async function xhrTest(voiceSpeaker, voiceSpeed, voiceText) {
+export async function xhrTest(voiceSpeaker, voiceSpeed, voiceText) {
 	const testXhrData = await loadXhr({
 		method: `POST`,
 		url: `https://naveropenapi.apigw.ntruss.com/voice/v1/tts`,
@@ -31,8 +31,26 @@ async function xhrTest(voiceSpeaker, voiceSpeed, voiceText) {
 			},
 		],
 	})
-	console.info(testXhrData)
+	return testXhrData
 }
 
-// 가빈형 이거 쓰세염
-xhrTest(`mijin`, 0, `ShareHouse Fighting!`)
+
+export async function convertBlob(audioSrc) {
+	const data = await audioSrc
+	const blob = new Blob([data], {type: `audio/mp3`})
+	return blob
+}
+
+export async function convertFile(audioSrc, fileName) {
+	const data = await audioSrc
+	const blob = new Blob([data], {type: `audio/mp3`})
+	const metadata = {
+		type: `audio/mp3`,
+	}
+	const file = new File([blob], fileName, metadata)
+	return file
+}
+
+// const audioSrc = xhrTest(`mijin`, 0, `ShareHouse Fighting!`)
+// const audioBlob = convertBlob(audioSrc)
+// const audioFile = convertFile(audioSrc)
