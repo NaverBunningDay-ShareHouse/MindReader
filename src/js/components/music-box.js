@@ -6,7 +6,7 @@ import { css } from 'emotion'
 class MusicBox extends LitElement {	
 	static get properties() {
 		return { 
-			isShow: { type: Boolean },
+			isOff: { type: Boolean },
 		}
 	}
     
@@ -18,8 +18,8 @@ class MusicBox extends LitElement {
 		this.pos3 = 0 
 		this.pos4 = 0
 		this.isDrag = false
-
-		this.getWhaleData()
+		this.isOff = false
+		this.syncData()
 	}
     
 	createRenderRoot() {
@@ -45,28 +45,48 @@ class MusicBox extends LitElement {
 		return {
 			async handleEvent() {	
 				if (!root.isDrag) {
-					const isShow = await root.getWhaleData()					
-					if (isShow) {					
-						whale.storage.sync.set({"isShow": false})
-						root.querySelector(`#musicBox`).classList.remove(`show`)
+					const isOff = await root.getWhaleData()										
+					if (isOff) {					
+						chrome.storage.sync.set({"isOff": false})
 						return
-					}				
-					whale.storage.sync.set({"isShow": true})
-					root.querySelector(`#musicBox`).classList.add(`show`)
+					}
+					chrome.storage.sync.set({"isOff": true})
 				}				
 			},
 			capture: true,
 		}
 	}
 
+	syncData() {
+		const root = this
+		chrome.storage.sync.get([`isOff`], result => {
+			const isOff = result.isOff			
+			if (isOff) {
+				root.querySelector(`#musicBox`).classList.add(`show`)
+			} else {
+				root.querySelector(`#musicBox`).classList.remove(`show`)
+			}			
+		})
+
+		// onChanged 이벤트 짜기
+		chrome.storage.onChanged.addListener(obj => {
+			if (obj.isOff.newValue) {
+				root.isOff = true
+				root.querySelector(`#musicBox`).classList.add(`show`)
+				return
+			}
+			root.isOff = false
+			root.querySelector(`#musicBox`).classList.remove(`show`)
+		})
+	}
+
 	getWhaleData() {
 		return new Promise(resolve => {
 			const root = this
-			whale.storage.sync.get([`isShow`], result => {
-				const isShow = result.isShow
-	
-				root.isShow = isShow
-				resolve(isShow)
+			chrome.storage.sync.get([`isOff`], result => {
+				const isOff = result.isOff
+				root.isOff = isOff
+				resolve(isOff)
 			})
 		})		
 	}
@@ -165,7 +185,11 @@ const style = css`
 		cursor: pointer;
 		transition: background-color 0.5s ease;
 
-		&:hover, &.show {
+		&:hover {
+			background-color: #04CF5C;
+		}
+
+		&.show {
 			background-color: #04CF5C;
 		}
 
