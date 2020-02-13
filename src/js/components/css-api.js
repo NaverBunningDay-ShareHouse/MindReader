@@ -35,4 +35,4 @@ async function xhrTest(voiceSpeaker, voiceSpeed, voiceText) {
 }
 
 // 가빈형 이거 쓰세염
-xhrTest(`mijin`, 0, `ShareHouse Fighting!`)
+//xhrTest(`mijin`, 0, `ShareHouse Fighting!`)
