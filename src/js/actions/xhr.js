@@ -20,5 +20,5 @@ export const loadXhr = obj => new Promise((resolve, reject) => {
 			}
 		}
 	}
-	req.send(obj.body|| obj.params|| null)
+	req.send(JSON.stringify(obj.body) || obj.params|| null)
 })
