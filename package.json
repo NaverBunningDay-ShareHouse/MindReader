@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "cleanup": "rm -rf dist && mkdir dist && cd dist && mkdir js",
-    "copy": "cp -rip src/_locales dist/ && cp -rip src/css dist/ && cp -rip src/fonts dist/ && cp -rip src/img dist/ && cp -rip src/index.html dist/ && cp -rip src/manifest.json dist/ && cp -rip src/js/index.js dist/js && cp -rip src/js/i18n-contents.js dist/js && cp -rip src/js/polyfill.min.js dist/js && cp -rip src/js/webcomponents-sd-ce.js dist/js && cp -rip src/js/font-awesome.js dist/js",
+    "copy": "cp -rip src/_locales dist/ && cp -rip src/css dist/ && cp -rip src/fonts dist/ && cp -rip src/img dist/ && cp -rip src/index.html dist/ && cp -rip src/manifest.json dist/ && cp -rip src/js/index.js dist/js && cp -rip src/js/i18n-contents.js dist/js && cp -rip src/js/polyfill.min.js dist/js && cp -rip src/js/webcomponents-sd-ce-pf.js dist/js && cp -rip src/js/font-awesome.js dist/js",
     "build": "./node_modules/.bin/webpack --mode=none",
     "build:prod": "./node_modules/.bin/webpack -p --optimize-minimize",
     "build:clean": "npm run cleanup && npm run copy && npm run build",

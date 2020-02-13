@@ -30,7 +30,7 @@
             "matches": ["<all_urls>"],
             "js": [
                 "js/polyfill.min.js",
-                "js/webcomponents-sd-ce.js",
+                "js/webcomponents-sd-ce-pf.js",
                 "js/font-awesome.js",
                 "content.js"
             ],
