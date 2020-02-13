@@ -30,11 +30,11 @@
             "matches": ["<all_urls>"],
             "js": [
                 "js/polyfill.min.js",
-                "js/webcomponents-sd-ce-pf.js",
+                "js/webcomponent.js",
                 "js/font-awesome.js",
                 "content.js"
             ],
-            "run_at": "document_end",
+            "run_at": "document_idle",
             "all_frames": false
         }
     ],
