@@ -6,7 +6,7 @@ import { css } from 'emotion'
 class MusicBox extends LitElement {	
 	static get properties() {
 		return { 
-			test: { type: String },
+			isShow: { type: Boolean },
 		}
 	}
     
@@ -17,6 +17,9 @@ class MusicBox extends LitElement {
 		this.pos2 = 0 
 		this.pos3 = 0 
 		this.pos4 = 0
+		this.isDrag = false
+
+		this.getWhaleData()
 	}
     
 	createRenderRoot() {
@@ -28,28 +31,58 @@ class MusicBox extends LitElement {
 	}
 
 	render() {
-		return html`        
+		return html`        		
 		<div class="${style}">
-			<div id="musicBox">
-				<div class="music-box-header"></div>
-				<div class="music-box-body"></div>
+			<div id="musicBox" @mouseup=${this.onClickMusicBox}>
+				<i class="fas fa-microphone-alt fa-5x"></i>
 			</div>
 		</div>  
 		`
 	}
 	
+	get onClickMusicBox() {
+		const root = this
+		return {
+			async handleEvent() {	
+				if (!root.isDrag) {
+					const isShow = await root.getWhaleData()					
+					if (isShow) {					
+						whale.storage.sync.set({"isShow": false})
+						root.querySelector(`#musicBox`).classList.remove(`show`)
+						return
+					}				
+					whale.storage.sync.set({"isShow": true})
+					root.querySelector(`#musicBox`).classList.add(`show`)
+				}				
+			},
+			capture: true,
+		}
+	}
+
+	getWhaleData() {
+		return new Promise(resolve => {
+			const root = this
+			whale.storage.sync.get([`isShow`], result => {
+				const isShow = result.isShow
+	
+				root.isShow = isShow
+				resolve(isShow)
+			})
+		})		
+	}
+
 	dragElement(elmnt) {
 		let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0
 
-		if (document.querySelector(`.music-box-header`)) {
-			document.querySelector(`.music-box-header`).onmousedown = dragMouseDown
+		if (document.querySelector(`#musicBox`)) {
+			document.querySelector(`#musicBox`).onmousedown = dragMouseDown
 		} else {
 			elmnt.onmousedown = dragMouseDown
 		}
 	
 		function dragMouseDown(e) {
 			e = e || window.event
-			e.preventDefault()
+			e.preventDefault()			
 
 			pos3 = e.clientX
 			pos4 = e.clientY
@@ -62,6 +95,8 @@ class MusicBox extends LitElement {
 			e.preventDefault()
 			const top = Number(elmnt.style.top.split(`px`)[0])
 			const left = Number(elmnt.style.left.split(`px`)[0])
+			const musicBox = document.querySelector(`music-box`)			
+			musicBox.isDrag = true
 
 			pos1 = pos3 - e.clientX
 			pos2 = pos4 - e.clientY
@@ -78,6 +113,8 @@ class MusicBox extends LitElement {
 		}
 	
 		function closeDragElement() {
+			const musicBox = document.querySelector(`music-box`)
+			musicBox.isDrag = false
 			document.onmouseup = null
 			document.onmousemove = null
 		}
@@ -102,7 +139,7 @@ class MusicBox extends LitElement {
 		}
 
 		function unlimitRight(left) {
-			if (left > window.innerWidth - 200) {
+			if (left > window.innerWidth - 100) {
 				elmnt.style.left = `${elmnt.offsetLeft - 10 }px`
 			}	
 		}
@@ -119,23 +156,30 @@ const style = css`
 		right: 50px;
 		bottom: 50px;
 		z-index: 9;
-		background-color: white;
-		border: 1px solid #d3d3d3;
+		background-color: #B4B9BF;
 		text-align: center;
-		border-radius: 3px;	
+		border-radius: 100%;	
 		
-		width: 200px;
-		height: 80px;
-		display: grid;
-		grid-template-rows: 20px 60px;
-	
-		
-		.music-box-header {
-			padding: 10px;
-			cursor: move;
-			z-index: 10;
-			background-color: #2196F3;
-			color: #fff;
+		width: 100px;
+		height: 100px;
+		cursor: pointer;
+		transition: background-color 0.5s ease;
+
+		&:hover, &.show {
+			background-color: #04CF5C;
+		}
+
+		&.hide {
+			display: none;
+		}
+
+		.fas:before {			
+			font-size: 50px;
+			color: white;
+			left: 50%;
+			top: 50%;
+			position: absolute;
+			transform: translate(-50%, -50%);
 		}
 	}
 }
