@@ -1,1 +1,1 @@
-console.info("background.js");
+console.info(`background.js`)
