@@ -33,6 +33,3 @@ async function xhrTest(voiceSpeaker, voiceSpeed, voiceText) {
 	})
 	console.info(testXhrData)
 }
-
-// 가빈형 이거 쓰세염
-xhrTest(`mijin`, 0, `ShareHouse Fighting!`)

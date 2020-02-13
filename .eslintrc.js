@@ -110,7 +110,7 @@ module.exports = {
         // 정적 메소드 아니면, this 사용, 정적 메소드면 static 사용
         // "class-methods-use-this": 1,
         // 조건문은 4개 미만까지 사용 가능
-        "complexity": [0, 4],
+        "complexity": [2, 8],
         "consistent-return": 1,
         // 일관된 조건 블록 형성
         "curly": 1,

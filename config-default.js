@@ -1,4 +1,6 @@
 export const config = {
-	"cssApiID": `` ,
-	"cssApiKey": ``,
+	"cssApiID":``,
+	"cssApiKey":``,
+	"ocrApiURL": `` ,
+	"ocrApiID": ``,
 }
