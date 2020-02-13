@@ -35,6 +35,8 @@
     "@webcomponents/webcomponentsjs": "^2.4.1",
     "archiver": "^3.1.1",
     "babel-loader": "^8.0.6",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2017": "^6.24.1",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.2.0",
     "eslint": "^6.8.0",
