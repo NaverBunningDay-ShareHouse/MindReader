@@ -1,11 +1,7 @@
-console.info(`ocr-making array start!`)
-
-import { xhrTest } from './ocr-api.js'
-
-async function ocrtoArray(){
-    const data = await xhrTest()
-    console.info(`xhrTest()`)
-    //console.log(`test`, data)
-    return 
+export async function ocrToArray(data){
+    let dataTemp = await data;
+    let datas = JSON.parse(data)
+    let array = datas.images[0].fields.map(element => element.inferText)
+    console.info(`ocrToArray : `,array)
+    return array//배열 넘김
 }
-ocrtoArray()

@@ -1,6 +1,6 @@
 import { loadXhr } from '../actions/xhr.js'
 import { config } from '../../../config.js'
-import {ocrtoArray} from '../../js/components/ocr-array.js'
+import { ocrToArray } from './ocr-array.js'
 
 console.info(`ocr-api start!`)
 export async function xhrTest(imgURL, imgType) {
@@ -34,9 +34,6 @@ export async function xhrTest(imgURL, imgType) {
                 "timestamp": 0,
                 "version": `V1`,
             },
-	})
-    console.info(`ocr-api.js`, testXhrData)
-    return testXhrData
+    })
+    return ocrToArray(testXhrData)
 }//end xhrTest
-
-xhrTest(`https://lineofficial.blogimg.jp/en/imgs/6/d/6dd556f6.png`,`png`)
