@@ -24,7 +24,7 @@ class AudioBox extends LitElement {
 		return html`        
 		<div class="${style}">
 			<audio id="audio" controls>
-				<source id="source" src="" type="audio/mp3"/>
+				<source id="source" src="" type="audio/mpeg"/>
 			</audio>
 		</div> 
 		`
@@ -35,9 +35,8 @@ class AudioBox extends LitElement {
 	}
 
 	async playAudio() {
-		const audioSrc = await xhr(`mijin`, 0, `ShareHouse Fighting!`)		
+		const audioSrc = await xhr(`mijin`, 1, `ShareHouse Fighting!`)		
 		const audioBlob = await convertBlob(audioSrc)
-
 		const blobUrl = URL.createObjectURL(audioBlob)
 		
 		this.querySelector(`#source`).setAttribute(`src`, blobUrl)

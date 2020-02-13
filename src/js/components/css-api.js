@@ -34,18 +34,29 @@ export async function xhr(voiceSpeaker, voiceSpeed, voiceText) {
 	return testXhrData
 }
 
+async function convertBinaryArray(audioSrc){
+    const data = await audioSrc
+	const dataLength = data.length
+	const array = new Uint8Array(new ArrayBuffer(dataLength))
+
+	for(let i = 0; i < dataLength; i++) {
+		array[i] = data.charCodeAt(i)
+	}
+	return array
+}
 
 export async function convertBlob(audioSrc) {
-	const data = await audioSrc
-	const blob = new Blob([data], {type: `audio/mp3`})
+    const data = convertBinaryArray(await audioSrc)
+    const blobData = await data
+	const blob = new Blob([blobData], {type: `audio/mpeg`})
 	return blob
 }
 
 export async function convertFile(audioSrc, fileName) {
 	const data = await audioSrc
-	const blob = new Blob([data], {type: `audio/mp3`})
+	const blob = new Blob([data], {type: `audio/mpeg`})
 	const metadata = {
-		type: `audio/mp3`,
+		type: `audio/mpeg`,
 	}
 	const file = new File([blob], fileName, metadata)
 	return file
