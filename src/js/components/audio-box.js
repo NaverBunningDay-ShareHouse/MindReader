@@ -1,7 +1,7 @@
 import { LitElement, html, render } from 'lit-element'
 import { css } from 'emotion'
 
-import { xhr, convertBlob } from './css-api.js'
+import { xhrCss } from './css-api.js'
 
 class AudioBox extends LitElement {	
 	static get properties() {
@@ -35,16 +35,33 @@ class AudioBox extends LitElement {
 	}
 
 	async playAudio() {
-		const audioSrc = await xhr(`mijin`, 1, `ShareHouse Fighting!`)		
-		const audioBlob = await convertBlob(audioSrc)
-		const blobUrl = URL.createObjectURL(audioBlob)
+		const audioSrc = await xhrCss(`mijin`, `0`, `안녕하세요`)		
+		const blobUrl = URL.createObjectURL(audioSrc)
 		
 		this.querySelector(`#source`).setAttribute(`src`, blobUrl)
-		console.dir(this.querySelector(`#audio`))
+		console.log(blobUrl)
+    
+		// this.saveFile(`test.mp3`, audioSrc)
 		
-		this.querySelector(`#audio`).pause()
-		this.querySelector(`#audio`).load()
-		this.querySelector(`#audio`).oncanplaythrough = this.querySelector(`#audio`).play()
+		// this.querySelector(`#audio`).pause()
+		// this.querySelector(`#audio`).load()
+		// this.querySelector(`#audio`).oncanplaythrough = this.querySelector(`#audio`).play()
+	}
+  
+	saveFile(fileName, content) {		
+
+		const objURL = window.URL.createObjectURL(content)
+            
+		if (window.__Xr_objURL_forCreatingFile__) {
+			window.URL.revokeObjectURL(window.__Xr_objURL_forCreatingFile__)
+		}
+		window.__Xr_objURL_forCreatingFile__ = objURL
+ 
+		const a = document.createElement(`a`)
+ 
+		a.download = fileName
+		a.href = objURL
+		a.click()
 	}
 }
 

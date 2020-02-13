@@ -11,7 +11,8 @@ import { config } from '../../../config.js'
 // jose : 스페인어, 남성 음색
 // carmen : 스페인어, 여성 음색
 console.info(`css-api start!`)
-export async function xhr(voiceSpeaker, voiceSpeed, voiceText) {
+export async function xhrCss(voiceSpeaker, voiceSpeed, voiceText) {
+	
 	const testXhrData = await loadXhr({
 		method: `POST`,
 		url: `https://naveropenapi.apigw.ntruss.com/voice/v1/tts`,
@@ -27,15 +28,16 @@ export async function xhr(voiceSpeaker, voiceSpeed, voiceText) {
 			},
 			{
 				key: `Content-Type`,
-				value: `application/x-www-form-urlencoded`,
+				value: `application/x-www-form-urlencoded; charset=utf-8`,
 			},
 		],
+		isBlob: true,
 	})
 	return testXhrData
 }
 
 async function convertBinaryArray(audioSrc){
-    const data = await audioSrc
+	const data = await audioSrc
 	const dataLength = data.length
 	const array = new Uint8Array(new ArrayBuffer(dataLength))
 
@@ -46,17 +48,17 @@ async function convertBinaryArray(audioSrc){
 }
 
 export async function convertBlob(audioSrc) {
-    const data = convertBinaryArray(await audioSrc)
-    const blobData = await data
-	const blob = new Blob([blobData], {type: `audio/mpeg`})
+	const data = convertBinaryArray(await audioSrc)
+	const blobData = await data
+	const blob = new Blob([blobData], {type: `audio/mp3`})
 	return blob
 }
 
 export async function convertFile(audioSrc, fileName) {
 	const data = await audioSrc
-	const blob = new Blob([data], {type: `audio/mpeg`})
+	const blob = new Blob([data], {type: `audio/mp3`})
 	const metadata = {
-		type: `audio/mpeg`,
+		type: `audio/mp3`,
 	}
 	const file = new File([blob], fileName, metadata)
 	return file
