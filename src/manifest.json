@@ -19,17 +19,21 @@
     },
     "content_scripts": [
         {
-            "matches": [
-                "http://*/*",
-                "https://*/*"
-            ],
-            "js": [
-                "content.js"
-            ],
+            "matches": ["<all_urls>"],
             "css": [
                 "css/content.css"
             ],
             "run_at": "document_start",
+            "all_frames": false
+        },
+        {
+            "matches": ["<all_urls>"],
+            "js": [
+                "js/polyfill.min.js",
+                "js/webcomponents-sd-ce.js",
+                "content.js"
+            ],
+            "run_at": "document_end",
             "all_frames": false
         }
     ],
