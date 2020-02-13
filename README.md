@@ -28,7 +28,7 @@ npm run watch
 ## Test
 
 ```
-# whale://extensions/ 접속
+# chrome://extensions/ 접속
 # '압축 해제된 확장앱 설치' 선택 후 'dist' 폴더 지정
 # 참고. npm run watch로 코드 수정시 바로 번들링 되게하면 편함
 ```
@@ -37,6 +37,8 @@ npm run watch
 ```
 # 배포 바로가기
 https://store.whale.naver.com/developers/dashboard
+
+# 크롬 바로가기 (이후 추가)
 ```
 
 ## 진행상황
