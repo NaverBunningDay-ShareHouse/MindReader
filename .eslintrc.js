@@ -178,7 +178,7 @@ module.exports = {
         "no-octal": 1,
         // no-octal-escape 잘모르겠음
         // 파라미터 재할당 금지
-        "no-param-reassign": 1,
+        // "no-param-reassign": 1,
         // getPrototypeOf 를 이용해 구하기
         // "getPrototypeOf": 1,
         // 변수 재선언 금지
