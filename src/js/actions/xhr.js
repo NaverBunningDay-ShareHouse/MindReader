@@ -22,6 +22,5 @@ export const loadXhr = obj => new Promise((resolve, reject) => {
 			}
 		}
 	}
-	console.log(obj.body)
 	req.send(JSON.stringify(obj.body)||obj.params|| null)
 })
