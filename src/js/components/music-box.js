@@ -19,6 +19,9 @@ class MusicBox extends LitElement {
 		this.pos4 = 0
 		this.isDrag = false
 		this.isOff = false
+		this.top = 0
+		this.left = 0
+
 		this.syncData()
 	}
     
@@ -34,7 +37,7 @@ class MusicBox extends LitElement {
 		return html`        		
 		<div class="${style}">
 			<div id="musicBox" @mouseup=${this.onClickMusicBox}>
-				${this.isOff ? html`<i class="fas fa-microphone-alt fa-5x"></i>` : html`<i class="fas fa-microphone-alt-slash fa-5x"></i>`}
+				${this.isOff ? html`<i class="fas fa-microphone-alt-slash fa-5x"></i>` : html`<i class="fas fa-microphone-alt fa-5x"></i>`}
 			</div>
 		</div>  
 		`
@@ -46,7 +49,7 @@ class MusicBox extends LitElement {
 			async handleEvent() {	
 				if (!root.isDrag) {
 					const isOff = await root.getWhaleData()										
-					if (isOff) {					
+					if (isOff) {												
 						chrome.storage.sync.set({"isOff": false})
 						return
 					}
@@ -58,25 +61,57 @@ class MusicBox extends LitElement {
 	}
 
 	syncData() {
-		const root = this
-		chrome.storage.sync.get([`isOff`], result => {
-			const isOff = result.isOff			
-			if (isOff) {
-				root.querySelector(`#musicBox`).classList.add(`show`)
-			} else {
-				root.querySelector(`#musicBox`).classList.remove(`show`)
-			}			
-		})
+		const root = this		
 
-		// 스토리지 탭간 데이터 동기화
+		// 스토리지 탭간 데이터 동기화 - 나중에 코드 축약 가능
 		chrome.storage.onChanged.addListener(obj => {
-			if (obj.isOff.newValue) {
+			if (obj.isOff && obj.isOff.newValue) {
 				root.isOff = true
+				root.querySelector(`#musicBox`).classList.remove(`show`)				
+			} else {
+				root.isOff = false
 				root.querySelector(`#musicBox`).classList.add(`show`)
-				return
+			}			
+			
+			if (obj.musicBoxTop) {
+				root.top = obj.musicBoxTop.newValue
+				root.querySelector(`#musicBox`).style.top = obj.musicBoxTop.newValue
 			}
-			root.isOff = false
-			root.querySelector(`#musicBox`).classList.remove(`show`)
+
+			if (obj.musicBoxLeft) {
+				root.left = obj.musicBoxLeft.newValue
+				root.querySelector(`#musicBox`).style.left = obj.musicBoxLeft.newValue
+			}
+		})			
+		
+		chrome.storage.sync.get([`isOff`, `musicBoxTop`, `musicBoxLeft`], result => {
+			const isOff = result.isOff			
+			
+			if (isOff) {
+				root.querySelector(`#musicBox`).classList.remove(`show`)
+				root.isOff = true
+			} else {												
+				root.querySelector(`#musicBox`).classList.add(`show`)
+				root.isOff = false
+			}
+
+			// 위치 동기화 (초기) - 나중에 코드 축약 가능			
+			// 초기화 함수
+			if (!result.musicBoxTop) {								
+				chrome.storage.sync.set({"musicBoxTop": `50px`})
+				root.querySelector(`#musicBox`).style.bottom = `50px`
+			} else {
+				root.top = result.musicBoxTop
+				root.querySelector(`#musicBox`).style.top = root.top
+			}
+
+			if (!result.musicBoxLeft) {
+				chrome.storage.sync.set({"musicBoxLeft": `50px`})
+				root.querySelector(`#musicBox`).style.right = `50px`
+			} else {
+				root.left = result.musicBoxLeft			
+				root.querySelector(`#musicBox`).style.left = root.left
+			}			
 		})
 	}
 
@@ -102,7 +137,7 @@ class MusicBox extends LitElement {
 	
 		function dragMouseDown(e) {
 			e = e || window.event
-			e.preventDefault()			
+			e.preventDefault()						
 
 			pos3 = e.clientX
 			pos4 = e.clientY
@@ -134,9 +169,13 @@ class MusicBox extends LitElement {
 	
 		function closeDragElement() {
 			const musicBox = document.querySelector(`music-box`)
-			musicBox.isDrag = false
+						
+			chrome.storage.sync.set({"musicBoxTop": elmnt.style.top})
+			chrome.storage.sync.set({"musicBoxLeft": elmnt.style.left})
+			
+			musicBox.isDrag = false			
 			document.onmouseup = null
-			document.onmousemove = null
+			document.onmousemove = null					
 		}
 
 		// 나중에 코드 축약 가능함
@@ -173,8 +212,6 @@ const style = css`
 
 	#musicBox {	
 		position: fixed;	
-		right: 50px;
-		bottom: 50px;
 		z-index: 9;
 		background-color: #B4B9BF;
 		text-align: center;
