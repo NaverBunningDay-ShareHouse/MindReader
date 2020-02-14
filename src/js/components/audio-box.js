@@ -81,7 +81,9 @@ class AudioBox extends LitElement {
 		document.body.addEventListener(`mouseover`, async event => {	
 			const target = event.target
 			const isOff = document.querySelector(`music-box`).isOff
+			let sound
 
+			// 여기 무조건 리팩토링 해야함. complexity 너무 높음
 			if (isOff) {
 				return
 			}
@@ -109,9 +111,13 @@ class AudioBox extends LitElement {
 			}
 
 			target.style.border = `1px dotted gray`
-			const sound = await xhrCss(`mijin`, `0`, target.textContent)
+
+			if (target.localName === `img`) {
+				sound = await xhrCss(`mijin`, `0`, target.alt)				
+			} else {
+				sound = await xhrCss(`mijin`, `0`, target.textContent)				
+			}			
 			this.playDirect(sound)
-			// console.log(`Hover Text: ${target.textContent}`, target)						
 			
 		}, true)
 
