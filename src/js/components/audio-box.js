@@ -35,17 +35,19 @@ class AudioBox extends LitElement {
 	}
 
 	async playAudio() {
-		const audioSrc = await xhrCss(`mijin`, `0`, `안녕하세요`)		
+		const audioSrc = await xhrCss(`mijin`, `0`, `음성 안내를 시작합니다`)		
 		const blobUrl = URL.createObjectURL(audioSrc)
 		
 		this.querySelector(`#source`).setAttribute(`src`, blobUrl)
-		console.log(blobUrl)
     
-		// this.saveFile(`test.mp3`, audioSrc)
-		
-		// this.querySelector(`#audio`).pause()
-		// this.querySelector(`#audio`).load()
-		// this.querySelector(`#audio`).oncanplaythrough = this.querySelector(`#audio`).play()
+		// this.saveFile(`test.mp3`, audioSrc)	
+    
+		this.querySelector(`#audio`).pause()
+		this.querySelector(`#audio`).load()		
+	}
+  
+	play() {
+		this.querySelector(`#audio`).play()
 	}
   
 	saveFile(fileName, content) {		
@@ -65,6 +67,10 @@ class AudioBox extends LitElement {
 	}
 }
 
-const style = css``
+const style = css`
+audio {
+  display: none;
+}
+`
 
 customElements.define(`audio-box`, AudioBox)

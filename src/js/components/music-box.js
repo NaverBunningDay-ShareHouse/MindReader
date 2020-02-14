@@ -51,9 +51,10 @@ class MusicBox extends LitElement {
 				if (!root.isDrag) {
 					const isOff = await root.getWhaleData()										
 					if (isOff) {												
-						chrome.storage.sync.set({"isOff": false})
+						chrome.storage.sync.set({"isOff": false})						
+						root.querySelector(`audio-box`).play()
 						return
-					}
+					}					
 					chrome.storage.sync.set({"isOff": true})
 				}				
 			},
