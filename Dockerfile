@@ -25,6 +25,10 @@ RUN apt install -y openjdk-8-jre-headless
 RUN apt install -y default-jre
 RUN apt install -y default-jdk
 
+RUN pip3 install nltk
+RUN python3 -c 'import nltk; nltk.download("punkt")'
+
+
 
 ENV BASEDIR /app
 # END
