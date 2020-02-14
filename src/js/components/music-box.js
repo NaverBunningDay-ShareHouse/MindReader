@@ -211,7 +211,7 @@ class MusicBox extends LitElement {
 const style = css`
 & {
 	position: fixed;
-	z-index: 10000000;
+	z-index: 10000000;	
 
 	#musicBox {	
 		position: fixed;	
@@ -224,6 +224,7 @@ const style = css`
 		height: 100px;
 		cursor: pointer;
 		transition: background-color 0.5s ease;
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(128, 128, 128, 0.1) inset;
 
 		&:hover {
 			background-color: #04CF5C;

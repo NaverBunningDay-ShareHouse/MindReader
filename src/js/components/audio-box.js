@@ -42,9 +42,11 @@ class AudioBox extends LitElement {
 		this.querySelector(`#source`).setAttribute(`src`, blobUrl)
     
 		// this.saveFile(`test.mp3`, audioSrc)	
-    
-		this.querySelector(`#audio`).pause()
-		this.querySelector(`#audio`).load()		
+		
+		if (this.querySelector(`#audio`)) {
+			this.querySelector(`#audio`).pause()
+			this.querySelector(`#audio`).load()		
+		}		
 	}
   
 	play() {
@@ -59,10 +61,12 @@ class AudioBox extends LitElement {
 		const blobUrl = URL.createObjectURL(audio)
 		
 		this.querySelector(`#source`).setAttribute(`src`, blobUrl)    
-    
-		this.querySelector(`#audio`).pause()
-		this.querySelector(`#audio`).load()		
-		this.play()
+		
+		if (this.querySelector(`#audio`)) {
+			this.querySelector(`#audio`).pause()
+			this.querySelector(`#audio`).load()		
+			this.play()	
+		}		
 	}
   
 	saveFile(fileName, content) {		
@@ -114,7 +118,7 @@ class AudioBox extends LitElement {
 				return
 			}
 
-			target.style.border = `1px dotted gray`
+			target.style.border = `2px dashed #04CF5C`
 
 			if (target.localName === `img`) {
 				sound = await xhrCss(`mijin`, `0`, target.alt)				
