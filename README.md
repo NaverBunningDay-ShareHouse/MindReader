@@ -1,14 +1,27 @@
 # MindReader
-
-![logo](https://github.com/NaverBunningDay-ShareHouse/MindReader/blob/master/src/img/icon128.png)
-
-저시력자를 위한 웹페이지 스크린 리더 확장 웹 어플리케이션
+![image](https://user-images.githubusercontent.com/12870549/74511011-51647880-4f48-11ea-86ff-6049b3e6d278.png)
+![image](https://user-images.githubusercontent.com/12870549/74511660-d69c5d00-4f49-11ea-8518-edd263035241.png)
+# For User
 
 ## Git Clone
 
 ```bash
 git clone https://github.com/NaverBunningDay-ShareHouse/MindReader.git
 ```
+
+## Build
+
+```
+# npm install
+# npm run build:clean
+```
+
+```
+# Setup
+Chrome/ whale brower -> extension -> load unpacked extension -> select `dist` directory
+```
+
+# For developer
 
 ## Watch
 
@@ -18,14 +31,6 @@ git clone https://github.com/NaverBunningDay-ShareHouse/MindReader.git
 npm run watch
 ```
 
-## Build
-
-```
-# npm install
-# npm run build:deploy
-
-# zip 파일 생성 > 배포
-```
 
 ## Test
 
@@ -39,6 +44,7 @@ npm run watch
 ```
 # 배포 바로가기
 https://store.whale.naver.com/developers/dashboard
+npm run build:deploy
 
 # 크롬 바로가기 (이후 추가)
 ```
