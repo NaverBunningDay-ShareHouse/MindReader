@@ -9,7 +9,7 @@ class MusicBox extends LitElement {
 			isOff: { type: Boolean },
 		}
 	}
-    
+
 	constructor() {
 		super()
 				

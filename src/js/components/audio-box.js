@@ -1,4 +1,4 @@
-import { LitElement, html, render } from 'lit-element'
+import { LitElement, html } from 'lit-element'
 import { css } from 'emotion'
 
 import { xhrCss } from './css-api.js'
@@ -13,7 +13,7 @@ class AudioBox extends LitElement {
 	constructor() {
 		super()
         
-		this.test = ``
+		this.pastText = ``
 	}
     
 	createRenderRoot() {
@@ -32,6 +32,7 @@ class AudioBox extends LitElement {
 
 	firstUpdated() {
 		this.playAudio()
+		this.hoverEvent()
 	}
 
 	async playAudio() {
@@ -49,6 +50,16 @@ class AudioBox extends LitElement {
 	play() {
 		this.querySelector(`#audio`).play()
 	}
+
+	playDirect(audio) {
+		const blobUrl = URL.createObjectURL(audio)
+		
+		this.querySelector(`#source`).setAttribute(`src`, blobUrl)    
+    
+		this.querySelector(`#audio`).pause()
+		this.querySelector(`#audio`).load()		
+		this.play()
+	}
   
 	saveFile(fileName, content) {		
 
@@ -64,6 +75,50 @@ class AudioBox extends LitElement {
 		a.download = fileName
 		a.href = objURL
 		a.click()
+	}
+
+	hoverEvent() {		
+		document.body.addEventListener(`mouseover`, async event => {	
+			const target = event.target
+			const isOff = document.querySelector(`music-box`).isOff
+
+			if (isOff) {
+				return
+			}
+
+			if (target.localName !== `img` && !target.textContent.trim()) {
+				// console.info(`빈곳임`, target.localName)
+				return
+			}
+
+			if (this.pastText === target.textContent) {
+				// console.info(`같은 곳임`)
+				return
+			}
+
+			this.pastText = target.textContent			
+
+			if (target.localName === `em` || target.localName === `string`) {
+				// console.info(`작은 곳임`)
+				return
+			}			
+
+			if (target.localName !== `img` && target.clientHeight > 500) {
+				// console.info(`너무 큼`)
+				return
+			}
+
+			target.style.border = `1px dotted gray`
+			const sound = await xhrCss(`mijin`, `0`, target.textContent)
+			this.playDirect(sound)
+			// console.log(`Hover Text: ${target.textContent}`, target)						
+			
+		}, true)
+
+		document.body.addEventListener(`mouseout`, () => {
+			const target2 = event.target
+			target2.style.border = `none`
+		})
 	}
 }
 
