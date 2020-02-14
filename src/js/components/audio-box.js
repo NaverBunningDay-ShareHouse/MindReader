@@ -128,6 +128,7 @@ class AudioBox extends LitElement {
 		document.body.addEventListener(`mouseout`, () => {
 			const target2 = event.target
 			target2.style.border = `none`
+			this.stop()
 		})
 	}
 }

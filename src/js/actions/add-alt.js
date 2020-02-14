@@ -17,7 +17,9 @@ function addAlt() {
     
 		const data = await xhrOCR(src, type)				
 		const originalImg = document.querySelector(`img[src="${src}"]`)
-		originalImg.alt = data.join(`, `)
+		if (originalImg) {
+			originalImg.alt = data.join(`, `)
+		}		
 	})
 }
 
