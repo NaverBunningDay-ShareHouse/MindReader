@@ -207,7 +207,7 @@ dmypy.json
 
 
 server/experi*
-server/data*
+server/data_in*
 
 
 
