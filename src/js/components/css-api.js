@@ -11,7 +11,8 @@ import { config } from '../../../config.js'
 // jose : 스페인어, 남성 음색
 // carmen : 스페인어, 여성 음색
 console.info(`css-api start!`)
-export async function xhrTest(voiceSpeaker, voiceSpeed, voiceText) {
+export async function xhrCss(voiceSpeaker, voiceSpeed, voiceText) {
+	
 	const testXhrData = await loadXhr({
 		method: `POST`,
 		url: `https://naveropenapi.apigw.ntruss.com/voice/v1/tts`,
@@ -27,17 +28,29 @@ export async function xhrTest(voiceSpeaker, voiceSpeed, voiceText) {
 			},
 			{
 				key: `Content-Type`,
-				value: `application/x-www-form-urlencoded`,
+				value: `application/x-www-form-urlencoded; charset=utf-8`,
 			},
 		],
+		isBlob: true,
 	})
 	return testXhrData
 }
 
+async function convertBinaryArray(audioSrc){
+	const data = await audioSrc
+	const dataLength = data.length
+	const array = new Uint8Array(new ArrayBuffer(dataLength))
+
+	for(let i = 0; i < dataLength; i++) {
+		array[i] = data.charCodeAt(i)
+	}
+	return array
+}
 
 export async function convertBlob(audioSrc) {
-	const data = await audioSrc
-	const blob = new Blob([data], {type: `audio/mp3`})
+	const data = convertBinaryArray(await audioSrc)
+	const blobData = await data
+	const blob = new Blob([blobData], {type: `audio/mp3`})
 	return blob
 }
 
@@ -51,6 +64,8 @@ export async function convertFile(audioSrc, fileName) {
 	return file
 }
 
-// const audioSrc = xhrTest(`mijin`, 0, `ShareHouse Fighting!`)
-// const audioBlob = convertBlob(audioSrc)
-// const audioFile = convertFile(audioSrc)
+// (async () => {
+// 	const audioSrc = await xhr(`mijin`, 0, `ShareHouse Fighting!`)		
+// 	const audioBlob = await convertBlob(audioSrc)
+// 	const blobUrl = URL.createObjectURL(audioBlob)  
+// })() 

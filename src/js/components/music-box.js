@@ -1,7 +1,7 @@
 import { LitElement, html } from 'lit-element'
 import { css } from 'emotion'
 
-// 박스 위치 초기화 함수 만들어야함
+import './audio-box.js'
 
 class MusicBox extends LitElement {	
 	static get properties() {
@@ -9,7 +9,7 @@ class MusicBox extends LitElement {
 			isOff: { type: Boolean },
 		}
 	}
-    
+
 	constructor() {
 		super()
 				
@@ -38,6 +38,7 @@ class MusicBox extends LitElement {
 		<div class="${style}">
 			<div id="musicBox" @mouseup=${this.onClickMusicBox}>
 				${this.isOff ? html`<i class="fas fa-microphone-alt-slash fa-5x"></i>` : html`<i class="fas fa-microphone-alt fa-5x"></i>`}
+				<audio-box></audio-box>
 			</div>
 		</div>  
 		`
@@ -50,9 +51,10 @@ class MusicBox extends LitElement {
 				if (!root.isDrag) {
 					const isOff = await root.getWhaleData()										
 					if (isOff) {												
-						chrome.storage.sync.set({"isOff": false})
+						chrome.storage.sync.set({"isOff": false})						
+						root.querySelector(`audio-box`).play()
 						return
-					}
+					}					
 					chrome.storage.sync.set({"isOff": true})
 				}				
 			},
