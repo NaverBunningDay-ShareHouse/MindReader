@@ -183,18 +183,19 @@ TAG_DICT = {
 
 
 def _make_ret(words_infered, words):
+    words = words.strip()
     list_of_ner_word, decoded_sentence = words_infered[0], words_infered[1]
     # remove [CLS] and [SEP]
     if decoded_sentence[:4] == '[CLS]' and decoded_sentence[-5:] == '[SEP]':
         return _get_msg('model error')
 
     decoded_sentence = _norm_words(decoded_sentence)
-    orig = decoded_sentence
 
     t_idx = 0
     t_dict = {}  # word idx, word
     for each in list_of_ner_word:
         k = each['word']
+        k = k.strip()
         tag = each['tag']
         if k in words and tag in TAG_DICT:
             words = re.sub(k, f' @{t_idx} ', words)
@@ -227,27 +228,38 @@ def _make_ret(words_infered, words):
     return ret_str
 
 
+from nltk.tokenize import sent_tokenize
+
+
 @ns.route('/ner')
 class Index(Resource):
     @ns.doc('ner', params={'words': 'sentence or sequence of words by whitespace to be inferenced'})
     def get(self):
         words = request.args.get('words')
 
-        if not isinstance(words, str):
-            logger.info('NO string')
-            return _get_msg('words is not string')
+        if isinstance(words, list):
+            words = ' '.join(words)
 
-        words_infered = infer(words)
+        words = sent_tokenize(words)
 
-        logger.info(f'original words: {words}')
-        logger.info(f'inferenced words: {words_infered[0], words_infered[1]}')
+        # if not isinstance(words, str):
+        #     logger.info('NO string')
+        #     return _get_msg('words is not string')
+        data = []
 
-        ret = _make_ret(words_infered, words)
-        ret = ret.split()
-        ret = ' '.join(ret)
+        for each in words:
+            words_infered = infer(each)
+
+            logger.info(f'original words: {each}')
+            logger.info(f'inferenced words: {words_infered[0], words_infered[1]}')
+
+            ret = _make_ret(words_infered, each)
+            ret = ret.split()
+            ret = ' '.join(ret)
+            data.append(ret)
 
         return {
-            'data': ret,
+            'data': data,
             'errors': None,
         }
 
