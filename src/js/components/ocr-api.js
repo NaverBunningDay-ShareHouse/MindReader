@@ -2,7 +2,7 @@ import { loadXhr } from '../actions/xhr.js'
 import { config } from '../../../config.js'
 import { ocrToArray } from './ocr-array.js'
 
-export async function xhrTest(imgURL, imgType) {
+export async function xhrOCR(imgURL, imgType) {
 	const testXhrData = await loadXhr({
 		method: `POST`,
 		url: config.ocrApiURL,
@@ -32,7 +32,7 @@ export async function xhrTest(imgURL, imgType) {
 		},
 	})
 	return ocrToArray(testXhrData)
-} // -- End xhrTest
+} // -- End xhrOCR
 
 // #20 PR Test Code
-// xhrTest(`http://gi.esmplus.com/ecot01/plan/2020/20_0201_1.jpg`, `jpg`)
+// xhrOCR(`http://gi.esmplus.com/ecot01/plan/2020/20_0201_1.jpg`, `jpg`)

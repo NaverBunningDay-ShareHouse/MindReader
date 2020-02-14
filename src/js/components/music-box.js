@@ -55,6 +55,7 @@ class MusicBox extends LitElement {
 						root.querySelector(`audio-box`).play()
 						return
 					}					
+					root.querySelector(`audio-box`).stop()
 					chrome.storage.sync.set({"isOff": true})
 				}				
 			},
