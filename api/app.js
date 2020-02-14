@@ -27,8 +27,8 @@ app.post(`/domain`, (req, res, next) => {
 	domainSet.exists({domainURL:req.body.domainUrl}).then(check => {
 		if(check){
 			domainSet.updateOne({domainURL:req.body.domainUrl}, {$inc:{views:1}}).exec()
-				.then(result => {
-					res.status(201).json(result)
+				.then(() => {
+					res.status(200).json('updated')
 				})
 				.catch(err => {
 					console.error(err)
@@ -39,6 +39,12 @@ app.post(`/domain`, (req, res, next) => {
 			domainSet.create({
 				domainURL:req.body.domainUrl,
 				views:0,
+			}).then(() => {
+				res.status(200).json('created')
+			})
+			.catch(err => {
+				console.error(err)
+				next(err)
 			})
 		}
 	})
