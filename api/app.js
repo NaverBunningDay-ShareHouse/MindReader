@@ -24,14 +24,25 @@ app.get(`/list`, (req, res, next) => {
 
 
 app.post(`/domain`, (req, res, next) => {
-	domainSet.updateOne({domainURL:req.body.domainUrl}, {$inc:{views:1}}).exec()
-		.then(result => {
-			res.status(201).json(result)
-		})
-		.catch(err => {
-			console.error(err)
-			next(err)
-		})
+	domainSet.exists({domainURL:req.body.domainUrl}).then(check => {
+		if(check){
+			domainSet.updateOne({domainURL:req.body.domainUrl}, {$inc:{views:1}}).exec()
+				.then(result => {
+					res.status(201).json(result)
+				})
+				.catch(err => {
+					console.error(err)
+					next(err)
+				})
+		}
+		else{
+			domainSet.create({
+				domainURL:req.body.domainUrl,
+				views:0,
+			})
+		}
+	})
+	
 })
 
 // catch 404 and forward to error handler
