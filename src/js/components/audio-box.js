@@ -51,6 +51,10 @@ class AudioBox extends LitElement {
 		this.querySelector(`#audio`).play()
 	}
 
+	stop() {
+		this.querySelector(`#audio`).pause()
+	}
+
 	playDirect(audio) {
 		const blobUrl = URL.createObjectURL(audio)
 		
