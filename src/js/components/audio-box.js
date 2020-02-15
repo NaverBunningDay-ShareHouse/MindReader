@@ -2,6 +2,7 @@ import { LitElement, html } from 'lit-element'
 import { css } from 'emotion'
 
 import { xhrCss } from './css-api.js'
+import { addAlt } from '../actions/add-alt.js'
 
 class AudioBox extends LitElement {	
 	static get properties() {
@@ -11,9 +12,7 @@ class AudioBox extends LitElement {
 	}
     
 	constructor() {
-		super()
-        
-		this.pastText = ``
+		super()      
 	}
     
 	createRenderRoot() {
@@ -85,43 +84,43 @@ class AudioBox extends LitElement {
 		a.click()
 	}
 
+	async playSimple(text) {
+		const sound = await xhrCss(`mijin`, `0`, text)				
+		this.playDirect(sound)
+	}
+
 	hoverEvent() {		
 		document.body.addEventListener(`mouseover`, async event => {	
 			const target = event.target
 			const isOff = document.querySelector(`music-box`).isOff
 			let sound
 
+			if (event.target.localName === `img`) {
+				// 로딩중 메세지
+				this.playSimple(`OCR 진행중`)
+
+				await addAlt(event.target)
+			}
+
 			// 여기 무조건 리팩토링 해야함. complexity 너무 높음
 			if (isOff) {
 				return
-			}
-
-			if (target.localName !== `img` && !target.textContent.trim()) {
-				// console.info(`빈곳임`, target.localName)
-				return
-			}
-
-			if (this.pastText === target.textContent) {
-				// console.info(`같은 곳임`)
-				return
-			}
-
-			this.pastText = target.textContent			
+			}		
 
 			if (target.localName === `em` || target.localName === `string`) {
-				// console.info(`작은 곳임`)
+				console.info(`작은 곳임`)
 				return
 			}			
 
 			if (target.localName !== `img` && target.clientHeight > 500) {
-				// console.info(`너무 큼`)
+				console.info(`너무 큼`)
 				return
 			}
 
 			target.style.border = `2px dashed #04CF5C`
 
-			if (target.localName === `img`) {
-				sound = await xhrCss(`mijin`, `0`, target.alt)				
+			if (target.localName === `img`) {				
+				sound = await xhrCss(`mijin`, `0`, target.alt)
 			} else {
 				sound = await xhrCss(`mijin`, `0`, target.textContent)				
 			}			

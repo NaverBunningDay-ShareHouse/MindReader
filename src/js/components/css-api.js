@@ -12,11 +12,21 @@ import { config } from '../../../config.js'
 // carmen : 스페인어, 여성 음색
 console.info(`css-api start!`)
 export async function xhrCss(voiceSpeaker, voiceSpeed, voiceText) {
+	console.log(voiceText)
 	
+	// eslint-disable-next-line no-useless-escape
+	const regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/gi
+	let text = voiceText
+	let t
+
+	if(regExp.test(text)){
+		t = text.replace(regExp, ``)
+		text = t
+	}
 	const testXhrData = await loadXhr({
 		method: `POST`,
 		url: `https://naveropenapi.apigw.ntruss.com/voice/v1/tts`,
-		params: `speaker=${voiceSpeaker}&speed=${voiceSpeed}&text=${voiceText}`,
+		body: `speaker=${voiceSpeaker}&speed=${voiceSpeed}&text=${text}`,
 		header: [
 			{
 				key: `X-NCP-APIGW-API-KEY-ID`,

@@ -1,26 +1,23 @@
 import { xhrOCR } from '../components/ocr-api.js'
 
-addAlt()
+export async function addAlt(target) {
+	const img = target
+	const src = img.src
+	const type = isType(img, `png`) || isType(img, `jpg`) || isType(img, `jpeg`)
 
-function addAlt() {
-	[...document.querySelectorAll(`img`)].forEach(async img => {
-		const src = img.src
-		const type = isType(img, `png`) || isType(img, `jpg`) || isType(img, `jpeg`)
+	if (type === null) {
+		return
+	}
 
-		if (type === null) {
-			return
-		}
-
-		if (img.alt.trim().length > 0) {
-			return
-		}
-    
-		const data = await xhrOCR(src, type)				
-		const originalImg = document.querySelector(`img[src="${src}"]`)
-		if (originalImg) {
-			originalImg.alt = data.join(`, `)
-		}		
-	})
+	if (img.alt.trim().length > 0) {
+		return
+	}
+	
+	const data = await xhrOCR(src, type)				
+	const originalImg = document.querySelector(`img[src="${src}"]`)
+	if (originalImg) {
+		originalImg.alt = data.join(`, `)
+	}		
 }
 
 function isType(img, type) {

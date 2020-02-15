@@ -16,7 +16,7 @@ export async function xhrOCR(imgURL, imgType) {
 				value: `application/json`,
 			},
 		],
-		body: {
+		body: JSON.stringify({
 			images: [
 				{
 					format: imgType, //받은 이미지파일 형식 설정
@@ -29,7 +29,7 @@ export async function xhrOCR(imgURL, imgType) {
 			resultType: `string`,
 			timestamp: 0,
 			version: `V1`,
-		},
+		}),
 	})
 	return ocrToArray(testXhrData)
 } // -- End xhrOCR

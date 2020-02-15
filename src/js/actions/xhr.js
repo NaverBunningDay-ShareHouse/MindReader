@@ -15,8 +15,7 @@ export const loadXhr = obj => new Promise((resolve, reject) => {
 
 	req.onreadystatechange = () => {
 		if (req.readyState === XMLHttpRequest.DONE) {
-			if (req.status === 200 || req.status === 201) {															
-				
+			if (req.status === 200 || req.status === 201) {				
 				if (obj.isBlob) {
 					resolve(req.response)			
 				} else {
@@ -27,5 +26,5 @@ export const loadXhr = obj => new Promise((resolve, reject) => {
 			}
 		}
 	}
-	req.send(JSON.stringify(obj.body) || obj.params|| null)
+	req.send(obj.body)
 })
