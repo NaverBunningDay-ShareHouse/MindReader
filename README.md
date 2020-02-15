@@ -46,7 +46,8 @@ npm run watch
 https://store.whale.naver.com/developers/dashboard
 npm run build:deploy
 
-# 크롬 바로가기 (이후 추가)
+# 크롬 바로가기
+chrome://extensions/
 ```
 
 ## 진행상황
