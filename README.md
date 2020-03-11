@@ -1,6 +1,6 @@
 # MindReader
 ![image](https://user-images.githubusercontent.com/12870549/74511011-51647880-4f48-11ea-86ff-6049b3e6d278.png)
-![image](https://user-images.githubusercontent.com/12870549/74511660-d69c5d00-4f49-11ea-8518-edd263035241.png)
+
 # For User
 
 ## Git Clone
@@ -22,6 +22,11 @@ Chrome/ whale brower -> extension -> load unpacked extension -> select `dist` di
 ```
 
 # For developer
+
+## Pre-requisites
+- App 최상위의 `config.js` 파일이 존재해야한다.
+- `config.js`는 OCR, CSS API KEY가 들어간다.
+- 현재는 템플릿만 제공
 
 ## Watch
 
